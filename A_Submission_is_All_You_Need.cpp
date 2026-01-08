@@ -8,17 +8,28 @@ using namespace std;
 #define rall(v) (v).rbegin(), (v).rend()
 #define fl(i,x,n) for (ll i = x; i < n; i++)
 #define nl "\n"
-
+ 
+void solve() {
+   ll n;cin>>n;
+   ll sum=0;
+   ll cnt=0;
+   vll a(n);
+   fl(i,0,n){
+    cin>>a[i];
+    if(a[i]==0)cnt++;
+    sum+=a[i];
+   }
+   
+    cout<<sum+cnt<<nl;
+}
+ 
 int main() {
-
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t;
-    cin >> t;
+    ll t=1;
+    cin>>t;
     while(t--){
-        ll n ;
-        cin >> n;
-        
+        solve();
     }
     return 0;
 }
