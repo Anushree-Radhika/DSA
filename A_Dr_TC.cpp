@@ -18,13 +18,28 @@ using namespace std;
 const ll INF = 1e18;
 const ll MOD = 1e9 + 7;
 void solve(){
+ 
     ll n;
     cin >> n;
-    vll a(n);
+    string s;
+    cin >> s;
+    ll co = 0,ans= 0;
     fl(i,0,n){
-        cin >> a[i];
+        if(s[i] == '1'){
+            co++;
+        }
     }
-    
+    fl(i,0,n){
+        if(s[i] == '0'){
+            ans += co+1;
+        }
+        else{
+            ans += co-1;
+        }
+    }
+
+    cout << ans << nl;
+    return;
 }
 int32_t main()
 {
@@ -32,9 +47,9 @@ int32_t main()
     cin.tie(NULL);
     int t;
     cin >> t;
-    // while (t--)
-    // {
+    while (t--)
+    {
         solve();
-    // }
+    }
     return 0;
 }

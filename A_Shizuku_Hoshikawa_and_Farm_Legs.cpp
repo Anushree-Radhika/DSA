@@ -19,6 +19,10 @@ const ll MOD = 1e9 + 7;
 void solve(){
     ll n;
     cin >> n;
+    if(n%2 == 1){
+        cout << 0 << nl;
+        return;
+    }
     if(n == 2 || n== 1){
         cout << n-1 << nl;
         return;

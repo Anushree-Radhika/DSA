@@ -22,22 +22,9 @@ void solve(){
     ll n;
     cin >> n;
     bool flag = false;
-    vll a(n);
+    vll l(n),r(n);
     fl(i,0,n){
-        cin >> a[i];
-    }
-    fl(i,0,n){
-        if((i>0)){
-            ll mn = min(a[i],a[i-1]),mx = abs(a[i] - a[i-1]);
-            if(mx < mn){
-                cout << "YES" << nl;
-                flag = true;
-                break;
-            }
-        }
-    }
-    if(!flag){
-        cout << "NO" <<nl;
+        cin >> l[i] >> r[i];
     }
 }
 int32_t main()

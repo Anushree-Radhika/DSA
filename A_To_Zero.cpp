@@ -18,13 +18,33 @@ using namespace std;
 const ll INF = 1e18;
 const ll MOD = 1e9 + 7;
 void solve(){
-    ll n;
-    cin >> n;
-    vll a(n);
-    fl(i,0,n){
-        cin >> a[i];
+ 
+    ll n,k,count= 0;
+    cin >> n >> k;
+    if(n%2&& k%2){
+        n = n-k;
+        count++;
+        count += n/(k-1);
+        count += n%(k-1) == 0?0:1;
     }
-    
+    else if(n%2 && k%2 == 0){
+        n = n-(k-1);
+        count++;
+        count += n/(k);
+        count += n%(k) == 0?0:1;
+    }
+    else if(n%2 == 0 && k%2 == 0){
+        count += n/k;
+        n/=k;
+        count +=  n%(k) == 0?0:1;
+    }
+    else{
+        count++;
+        count += n/(k-1);
+        n/=(k-1);
+        count +=  n%(k-1) == 0?0:1;
+    }
+    cout << count << nl;
 }
 int32_t main()
 {
@@ -32,9 +52,9 @@ int32_t main()
     cin.tie(NULL);
     int t;
     cin >> t;
-    // while (t--)
-    // {
+    while (t--)
+    {
         solve();
-    // }
+    }
     return 0;
 }

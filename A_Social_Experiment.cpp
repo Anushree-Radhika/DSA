@@ -7,7 +7,6 @@ using namespace std;
 #define vll vector<long long> 
 #define vpll vector<pair<ll,ll>>
 #define pub push_back 
-#define pop pop_back 
 #define all(v) (v).begin(), (v).end()
 #define rall(v) (v).rbegin(), (v).rend()
 #define fl(i,x,n) for (ll i = x; i < n; i++)
@@ -18,13 +17,19 @@ using namespace std;
 const ll INF = 1e18;
 const ll MOD = 1e9 + 7;
 void solve(){
+ 
     ll n;
     cin >> n;
-    vll a(n);
-    fl(i,0,n){
-        cin >> a[i];
+    if(n <= 3){
+        cout << n << nl;return;
     }
-    
+    ll ans = n%2;
+    if(ans == 0){
+        cout << 0 << nl;
+    }
+    else{
+        cout << 1 << nl;
+    }
 }
 int32_t main()
 {
@@ -32,9 +37,9 @@ int32_t main()
     cin.tie(NULL);
     int t;
     cin >> t;
-    // while (t--)
-    // {
+    while (t--)
+    {
         solve();
-    // }
+    }
     return 0;
 }

@@ -1,11 +1,9 @@
-#include<bits/stdc++.h>
-#include<numeric>
+#include <bits/stdc++.h>
 using namespace std;
 #define F first
 #define S second 
 #define ll long long 
 #define vll vector<long long> 
-#define vpll vector<pair<ll,ll>>
 #define pub push_back 
 #define pop pop_back 
 #define all(v) (v).begin(), (v).end()
@@ -18,12 +16,33 @@ using namespace std;
 const ll INF = 1e18;
 const ll MOD = 1e9 + 7;
 void solve(){
-    ll n;
-    cin >> n;
-    vll a(n);
-    fl(i,0,n){
-        cin >> a[i];
+
+    ll n,a,b;
+    cin >> n >> a >> b;
+
+    if(n%2){
+        if(a%2 && b%2){
+            cout << "YES" << nl;
+        }
+        else if(b>a && b%2){
+            cout << "YES" << nl;
+        }
+        else{
+            cout << "NO" << nl;
+        }
     }
+    else{
+        if(a%2 == 0 && b%2 == 0){
+            cout << "YES\n";
+        }
+        else if(b>a && b%2 ==0){
+            cout << "YES\n";
+        }
+        else{
+            cout << "NO\n";
+        }
+    }
+   
     
 }
 int32_t main()
@@ -32,9 +51,9 @@ int32_t main()
     cin.tie(NULL);
     int t;
     cin >> t;
-    // while (t--)
-    // {
+    while (t--)
+    {
         solve();
-    // }
+    }
     return 0;
 }
