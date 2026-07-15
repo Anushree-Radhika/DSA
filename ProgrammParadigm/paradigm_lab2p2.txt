@@ -1,0 +1,232 @@
+#include<iostream>
+using namespace std;
+typedef struct GrowingStack{
+        int cap,idx;
+        int *digit;
+        int maxcap;
+}mystack;
+bool isEmpty(mystack *s){
+        if(s->idx == 0){
+                return true;
+        }
+        else{
+                return false;
+        }
+}
+mystack *inflate(mystack *s){
+
+        if (s->cap == s->maxcap) {
+                cout << "No more insertions possible\n";
+                return s;
+        }
+
+        int newCap;
+        if (s->cap * 2 <= s->maxcap) {
+                newCap = s->cap * 2;
+                cout << "Inflating the stack\n";
+         } else {
+                newCap = s->maxcap;
+                cout << "Last inflation\n";
+        }
+
+        int *newArr = new int[newCap];
+
+         // Copy existing elements (NO pop)
+        for (int i = 0; i < s->idx; i++) {
+                newArr[i] = s->digit[i];
+        }
+
+        delete[] s->digit;
+                s->digit = newArr;
+        s->cap = newCap;
+
+        return s;
+}
+void top(mystack *s){
+        if(isEmpty(s)){
+                cout << "Stack is empty" << "\n";
+                return ;
+        }
+        int x = s->digit[s->idx - 1];
+        cout << "Topmost element is:" << x <<"\n";
+        return ;
+}
+bool isFull(mystack *s){
+        if(s->cap == s->idx){
+                return true;
+        }
+        else{
+                return false;
+        }
+}
+void initialize(mystack *s){
+        cout << "Enter the size of the stack\n";
+        cin >> s->cap;
+        cout <<"Enter the maximum size of the stack\n";
+        cin >> s->maxcap;
+        s->idx = 0;
+        s->digit  = new int[s->cap];
+        if(!s->digit){
+                cout << "Stack initialization invalid\n";
+        }
+        return;
+}
+int push(mystack *s,int x){
+        if (isFull(s)) {
+                if((s)->cap < (s)->maxcap){
+                        s = inflate(s);
+                                        }
+                else{
+                        cout << "No furthur elements can be pushed in the stack" << "\n";
+                        return 0;
+                }
+        }
+        (s)->digit[(s)->idx] =  x;
+        (s)->idx += 1;
+        cout << "Successful insertion" << "\n";
+        return 1;
+}
+int pop(mystack *s){
+        if(isEmpty(s)){
+                cout << "No more elements to pop" << "\n";
+                return 0;
+        }
+        else{
+                int t = s->digit[s->idx - 1];
+                s->idx --;
+                cout << "The popped element is:" << t << "\n";
+                return t;
+        }
+}
+int getMaxSize(mystack *s){
+        return s->maxcap;
+}
+int currentSize(mystack *s){
+        return s->idx;
+}
+void stack3(mystack *s1,mystack *s2,mystack *s3){
+        while((!isEmpty(s1)) && (!isEmpty(s2))){
+                push(s3,pop(s1));
+                push(s3,pop(s2));
+        }
+        while(!isEmpty(s1)){
+                push(s3,pop(s1));
+        }
+        while(!isEmpty(s2)){
+                            push(s3,pop(s2));
+        }
+}
+int main(){
+
+        mystack s,s1,s2,s3;
+        while(1){
+        cout << "\nMENU" << "\n";
+        cout << "-----------------------\n";
+        cout << "1.Check if its empty" << "\n";
+        cout << "2.Check if its full" << "\n";
+        cout << "3.Push an element" << "\n";
+        cout << "4.Pop an element" << "\n";
+        cout << "5.Get max size" << "\n";
+        cout << "6.Get topmost element" << "\n";
+        cout << "7.Get current size" << "\n";
+        cout << "8.Implementing function with 3 stack instances" << "\n";
+        cout << "9.Initializing a stack\n";
+        cout << "10.Exit\n";
+        cout << "Enter your choice\n" ;
+        int choice;
+        cin >> choice;
+        switch(choice){
+                case 1:{
+                               if(isEmpty(&s)){
+                                       cout << "Stack is empty\n";
+                               }
+                               else{
+                                       cout << "Stack is not empty\n";
+                               }
+                               break;
+                       }
+                case 2:{
+                               if(isFull(&s)){
+                                       cout << "Stack is full\n";
+                               }
+                               else{
+                                       cout << "Stack is not full\n";
+                               }
+                                                              break;
+                       }
+                case 3:{
+                               cout << "Input element to insert\n";
+                               int x;
+                               cin >> x;
+                               push(&s,x);
+                               break;
+                       }
+                case 4:{
+                               pop(&s);
+                               break;
+                       }
+                case 5:{
+                                cout << getMaxSize(&s) << "\n";
+                                break;
+                       }
+                case 6:{
+                               top(&s);
+                               break;
+                       }
+                case 7:{
+                               cout <<  currentSize(&s) << "\n";
+                               break;
+                       }
+                case 8:{
+                                cout << "Initializing three stacks together\n";
+                                cout << "Initializing stack1\n";
+                                initialize(&s1);
+                                cout << "Input number of elements to insert in stack1\n";
+                                int y;
+                                cin >> y;
+                                while(y--){
+                                        int x;
+                                        cin >> x;
+                                        push(&s1,x);
+                                }
+                                cout << "Initializing stack2\n";
+                                initialize(&s2);
+                                                                cout << "Input number of elements to insert in stack2\n";
+                                cin >> y;
+                                while(y--){
+                                        int x;
+                                        cin >> x;
+                                        push(&s2,x);
+                                }
+                                cout << "Initializing stack3\n";
+                                initialize(&s3);
+                                stack3(&s1,&s2,&s3);
+                                cout << "Do you want to check elements present in stack3\n If yes write 1 and if no 0\n";
+                                int z;
+                                cin >> z;
+                                if(z){
+                                        while(!isEmpty(&s3)){
+                                                pop(&s3);
+                                        }
+                                }
+                                break;
+
+                       }
+                 case 9:{
+                                cout << "Initializing a stack\n" ;
+                                initialize(&s);
+                                break;
+                       }
+                case 10:{
+                                cout << "Exitting\n";
+                                return 0;
+                        }
+                default:{
+                                cout << "Choose some other input\n";
+                                break;
+                       }
+
+        }
+        }
+        return 0;
+    }
