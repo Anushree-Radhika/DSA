@@ -1,0 +1,90 @@
+#include<iostream>
+using namespace std;
+typedef struct Student{
+        string id;
+        int marks;
+}test;
+template <typename T>
+void swapElements(T &a, T &b) {
+    T temp = a;
+    a = b;
+    b = temp;
+}
+//void swapint(int &a,int &b){
+//      int temp = a;
+//      a = b;
+//      b = temp;
+//      return;
+//}
+//void swapshort(short &a,short &b){
+//      short temp = a;
+//      a = b;
+//      b = temp;
+//        return;
+//}
+//void swapfloat(float &a,float &b){
+//      float temp = a;
+//      a = b;
+//      b = temp;
+//      return;
+//}
+//void swapdouble(double &a,double &b){
+//      double temp = a;
+//      a = b;
+//      b = temp;
+//      return;
+//      }
+//void swapstruct(test &a,test &b){
+//      string temp = a.id;
+//      a.id = b.id;
+//      b.id = temp;
+//      int tm = a.marks;
+//      a.marks = b.marks;
+//      b.marks = tm;
+//      return;
+//}
+
+int main(){
+
+        cout << "Testing for int type\n";
+        int a = 5,b = 7;
+        cout << "Values before testing a =" << a << " and b =" << b << "\n";
+        //swapint(a,b);
+        swapElements(a,b);
+        cout << "Values after testing a =" << a << "and b =" << b << "\n";
+
+        cout << "Testing for short type\n";
+        short m = 5,n = 7;
+        cout << "Values before testing m =" << m << " and n =" << n << "\n";
+        //swapshort(m,n);
+        swapElements(m,n);
+        cout << "Values after testing m =" << m << "and n =" << n << "\n";
+
+        printf("Testing for float type\n");
+        float r = 5.7,s = 7.5;
+        cout << "Values before testing r =" << r << " and s =" << s << "\n";
+        //swapfloat(r,s);
+        swapElements(r,s);
+        cout << "Values after testing r =" << r << "and s =" << s << "\n";
+
+        printf("Testing for double type\n");
+        double g = 5.757,h = 7.575;
+        cout << "Values before testing g =" << g << " and h =" << h << "\n";
+        //swapdouble(g,h);
+        swapElements(g,h);
+        cout << "Values after testing g =" << g << "and h =" << h << "\n";
+
+        printf("Testing for struct type\n");
+        test *x = new test;
+                x->id = "csb504";
+        x->marks = 99;
+        test *y = new test;
+        y->id = "csb104";
+        y->marks = 100;
+        cout << "Values before testing: x's id = " << x->id << " and x's marks " << x->marks << " and y's id " << y->id << " and y's marks =" << y->marks  << "\n";
+        //swapstruct(*x,*y);
+        swapElements(*x,*y);
+        cout << "Values after testing: x's id = " << x->id << " and x's marks " << x->marks << " and y's id " << y->id << " and y's marks =" << y->marks  << "\n";
+
+        return 0;
+}
