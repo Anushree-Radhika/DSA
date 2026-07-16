@@ -1,0 +1,271 @@
+﻿#include<stdio.h>
+#include<string.h>
+#define MAX_STUDENTS 15
+
+
+struct Student {
+    char name[20];
+    int roll;
+    char telephone[11];
+    char address[20];
+};
+struct SReg {
+    int count; 
+    struct Student studentArray[MAX_STUDENTS];
+};
+int add(struct SReg *sr,struct Student s) {
+
+
+
+
+    for(int i = 0; i<sr->count; i++){
+        //Checking for duplicate array
+        if(sr->studentArray[i].roll == s.roll){
+            printf("%d roll number already exists in the student array\n",s.roll);
+            return 0;
+        }
+    }
+    // Adding a student
+    if(sr->count < MAX_STUDENTS){
+        sr->studentArray[sr->count++] = s;
+        return 1;
+    }
+    printf("Size Limit Exceeded\n");
+    return 0;
+
+
+}
+struct Student get(struct SReg *sr,int r){
+
+
+    struct Student NotFound = {0};
+    for(int i=0;i<sr->count ;i++){
+        if(sr->studentArray[i].roll == r){
+            return sr->studentArray[i];
+        }
+    }
+    return NotFound;
+}
+
+
+int delete(struct SReg *sr, int r){
+
+
+    int index = 0;
+    for(int i=0;i<sr->count;i++){
+        if(sr->studentArray[i].roll == r){
+            index = i;
+            break;
+        }
+    }
+    if(index != 0){
+        for(int j=index ;j<sr->count;j++){
+            sr->studentArray[j] = sr->studentArray[j+1];
+        }
+        sr->count--;
+        printf("The enetered roll got deleted.\n");
+        return 1; 
+    }
+    printf("The roll doesn't exist.\n");
+    return 0;
+}
+
+
+int modify(struct SReg *sr,struct Student s){
+
+
+    for(int i=0;i<sr->count;i++){
+        if(sr->studentArray[i].roll == s.roll){
+            sr->studentArray[i] = s;
+            return 1;
+        }
+    }
+    return 0;
+}
+void sortStudents(struct SReg *sr){
+    for(int i=0;i<sr->count;i++){
+        for(int j=0;j<sr->count - 1;j++){
+            if(strcmp(sr->studentArray[j].name , sr->studentArray[j+1].name) > 0){
+                struct Student temp = sr->studentArray[i];
+                sr->studentArray[i] = sr->studentArray[i+1];
+                sr->studentArray[i+1] = temp;
+            }
+        } 
+    }
+    return ;
+}
+int getCount(struct SReg *sr){
+    return sr->count;
+}
+
+
+
+
+void export(struct SReg *sr, char *fname) {
+    FILE *fp = fopen(fname, "w");
+    if (fp == NULL) {
+        printf("Could not open file %s for writing.\n", fname);
+        return;
+    }
+
+
+    for (int i = 0; i < sr->count; i++) {
+        fprintf(fp, "%s,%d,%s,%s\n",
+            sr->studentArray[i].name,
+            sr->studentArray[i].roll,
+            sr->studentArray[i].telephone,
+            sr->studentArray[i].address
+        );
+    }
+
+
+    fclose(fp);
+    printf("Student data exported to %s successfully.\n", fname);
+}
+
+
+
+
+void load(struct SReg *sr,char *fname) {
+    FILE *fp = fopen(fname, "r");
+    if (fp == NULL) {
+        printf("Could not open file %s for reading.\n", fname);
+        return;
+    }
+    struct Student temp;
+    sr->count = 0;
+
+
+    while (fscanf(fp, "%19[^,],%d,%10[^,],%19[^\n]\n",
+                  temp.name, &temp.roll, temp.telephone, temp.address) == 4) {
+        if (sr->count < MAX_STUDENTS) {
+            sr->studentArray[sr->count++] = temp;
+        } else {
+            printf("Maximum student limit reached while loading.\n");
+            break;
+        }
+    }
+
+
+    fclose(fp);
+    printf("Student data loaded from %s successfully.\n", fname);
+}
+
+
+
+
+int main(){
+
+
+    struct SReg reg = {0};
+    // IMPLEMENTING ADD
+    struct Student s1 = {"Krishna",1,"7689736547","Vrindavan"};
+    struct Student s2 = {"Radhaju",2,"7689736547","Barsana"};
+    struct Student s3 = {"Sriju",1,"7689736507","Gokul"};
+    if(add(&reg,s1)){
+        printf("%s added successfully\n",s1.name);
+    }
+    else{
+        printf("%s couldnt get added\n",s1.name);
+    }
+    if(add(&reg,s2)){
+        printf("%s added successfully\n",s2.name);
+    }
+    else{
+        printf("%s couldnt get added\n",s2.name);
+    }
+    if(add(&reg,s3)){
+        printf("%s added successfully\n",s3.name);
+    }
+    else{
+        printf("%s couldnt get added\n",s3.name);
+    }
+
+
+
+
+    //IMPLEMENTING Student get
+
+
+    struct Student s4 = {"Ganesh",3,"7686736547","Kailash"};
+    struct Student s5 = {"Kartik",4,"7683736547","Kailash"};
+    struct Student s6 = {"Sriju",5,"7689786507","Barsana"};
+    add(&reg, s4);
+    add(&reg, s5);
+    add(&reg, s6);
+
+
+    int searchRoll;
+    printf("Enter roll number to search:\n");
+    scanf("%d", &searchRoll);
+    struct Student result = get(&reg, searchRoll);
+
+
+
+
+    if(result.roll != 0){
+        printf("Name of the student: %s\n",result.name);
+        printf("Roll Number of the student: %d\n",result.roll);
+        printf("Telephone of the student: %s\n",result.telephone);
+        printf("Address of the student: %s\n",result.address);
+    }
+    else{
+        printf("The roll number of the student is not present.\n");
+    }
+
+
+
+
+
+
+    // Implementing Delete a Roll if present and getCount Function together
+    int deleteroll ;
+    printf("Enter roll ,you want to delete:\n");
+    scanf("%d",&deleteroll);
+    printf("Size before deleting an element in the array:%d\n",getCount(&reg));
+    delete(&reg,deleteroll);
+    printf("Size after deleting an element in the array:%d\n",getCount(&reg));
+    
+
+
+    //Implementing modify function
+
+
+    if( modify(&reg,s3)){
+        printf("Student with roll %d updated successfully.\n", s3.roll);
+    } else {
+        printf("No student with roll %d found to update.\n", s3.roll);
+    }
+
+
+    struct Student result_1 = get(&reg, s3.roll);
+    if (result_1.roll != 0) {
+        printf("Updated Record:\n");
+        printf("Name: %s\n", result_1.name);
+        printf("Roll: %d\n", result_1.roll);
+        printf("Telephone: %s\n", result_1.telephone);
+        printf("Address: %s\n", result_1.address);
+    }
+    //Implementing sort student function
+    sortStudents(&reg);
+    printf("\nStudents after sorting by name:\n");
+
+
+    for (int i = 0; i < reg.count; i++) {
+        printf("Name: %s, Roll: %d, Telephone: %s, Address: %s\n",
+        reg.studentArray[i].name,
+        reg.studentArray[i].roll,
+        reg.studentArray[i].telephone,
+        reg.studentArray[i].address);
+    }
+    
+    //Implementing export
+    export(&reg, "students.txt");     // Save register to file
+    
+    //Implementing load
+    load(&reg, "students.txt");      // Load register from file
+
+
+    return 0;
+    
+}
